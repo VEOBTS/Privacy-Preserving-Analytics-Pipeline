@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+
+  # ── PostgreSQL Database ──────────────────────────────────────────────────
+  db:
+    image: postgres:15-alpine
+    container_name: analytics_db
+    environment:
+      POSTGRES_USER: analytics_user
+      POSTGRES_PASSWORD: analytics_pass
+      POSTGRES_DB: analytics_db
+    volumes:
+      # Persist database data between container restarts
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # Expose port 5432 to your host machine so you can connect with psql
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U analytics_user -d analytics_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── FastAPI Backend ───────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: analytics_backend
+    environment:
+      DATABASE_URL: postgresql://analytics_user:analytics_pass@db:5432/analytics_db
+      KEY_FILE_PATH: /app/keys/paillier_keys.json
+      DP_EPSILON: '1.0'
+      AGGREGATOR_INTERVAL_SECONDS: '600'
+    volumes:
+      # Mount the backend code so changes are picked up without rebuilding
+      - ./backend:/app
+      # Persist the keys directory (so keys survive container restarts)
+      - keys_data:/app/keys
+      # Mount the client-sdk so it is served as a static file
+      - ./client-sdk:/app/../client-sdk
+    ports:
+      - '8000:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── React Frontend ────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: analytics_frontend
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# ── Named Volumes ─────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+  keys_data:

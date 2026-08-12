@@ -7,7 +7,7 @@ WORKDIR /app
 # This means if only your code changes but not requirements,
 # Docker will not reinstall all packages on every rebuild
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --default-timeout=100 --no-cache-dir -r requirements.txt
 
 # Copy the rest of the backend code
 COPY . .
