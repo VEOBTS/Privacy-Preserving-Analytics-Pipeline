@@ -1,0 +1,112 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+.env
+.env.local
+.env.*.local
+
+# Backend build
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+backup/
+database/
+data/
+
+# Encryption keys and credentials (CRITICAL - DO NOT COMMIT)
+backend/keys/
+backend/keys/*
+*.key
+*.pem
+*.crt
+*.p12
+*.pub
+secrets/
+secrets/
+.aws/
+.gcp/
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Frontend
+node_modules/
+npm-debug.log*
+yarn-error.log*
+frontend/dist/
+frontend/build/
+.npm
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+ehthumbs.db
+
+# Docker
+.dockerignore
+.docker/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.cache
+.cache/
+temp/
+tmp/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Analytics/Logs
+logs/
+*.csv
+*.parquet
+output/
+
+# Local development
+.vscode-server/
+.local/
