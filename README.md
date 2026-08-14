@@ -1,4 +1,4 @@
-# Privacy-First Analytics SDK
+# Privacy-First Analytics
 
 ## Overview
 This project is an end-to-end MVP for a secure, privacy-first analytics system that allows data to be encrypted on the client side and aggregated on the server without exposing any individual user data.
